@@ -72,7 +72,7 @@ class DistributeLockApplicationTests {
         try (CuratorLock curatorLock = new CuratorLock(client, lockPath, 3)) {
             boolean lock1 = curatorLock.getLock();
             log.info("获取锁结果：:{}", lock1);
-            Thread.sleep(30000);
+            Thread.sleep(5000);
             log.info("准备释放锁");
         }
     }
@@ -80,7 +80,10 @@ class DistributeLockApplicationTests {
     @Test
     void testZkLock() throws Exception {
         ZkLock zkLock = new ZkLock();
-        boolean lock1 = zkLock.getLock("lock1");
+        boolean lock1 = zkLock.getLock("zkLock");
+        if (lock1) {
+            Thread.sleep(20000);
+        }
         log.info("获取锁结果：:{}", lock1);
         zkLock.close();
     }

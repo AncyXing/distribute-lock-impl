@@ -26,7 +26,8 @@ public class RedissonLock implements Lock, Closeable {
 //            if (lock.tryLock(expireTime, TimeUnit.SECONDS)) {
 //                return true;
 //            }
-            // 可以阻塞
+            // 可以阻塞，leaseTime为-1才会触发看门狗机制，不设置默认为-1
+            // 到了租赁时间，锁会被自动释放，其他线程可以获取到锁
             lock.lock(expireTime, TimeUnit.SECONDS);
             return true;
 
